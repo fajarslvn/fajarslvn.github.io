@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Hacker Notes</title>
+    <link>https://fajarslvn.github.io/posts/</link>
+    <description>Recent content in Posts on Hacker Notes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© fajarslvn.</copyright>
+    <lastBuildDate>Wed, 18 May 2022 14:49:48 +0700</lastBuildDate><atom:link href="https://fajarslvn.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>My Way to Finding XSS (1)</title>
+      <link>https://fajarslvn.github.io/posts/finding-xss-1/</link>
+      <pubDate>Wed, 18 May 2022 14:49:48 +0700</pubDate>
+      
+      <guid>https://fajarslvn.github.io/posts/finding-xss-1/</guid>
+      <description>This is some content func main(myName str) {  Println(myName) } </description>
+    </item>
+    
+    <item>
+      <title>My Way to Finding XSS (2)</title>
+      <link>https://fajarslvn.github.io/posts/finding-xss-2/</link>
+      <pubDate>Wed, 18 May 2022 14:49:48 +0700</pubDate>
+      
+      <guid>https://fajarslvn.github.io/posts/finding-xss-2/</guid>
+      <description>This is some content func main(myName str) {  Println(myName) } </description>
+    </item>
+    
+  </channel>
+</rss>

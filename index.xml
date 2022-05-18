@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hacker Notes</title>
+    <link>https://fajarslvn.github.io/</link>
+    <description>Recent content on Hacker Notes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© fajarslvn.</copyright>
+    <lastBuildDate>Wed, 18 May 2022 14:49:48 +0700</lastBuildDate><atom:link href="https://fajarslvn.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>About</title>
+      <link>https://fajarslvn.github.io/about/</link>
+      <pubDate>Wed, 18 May 2022 15:13:52 +0700</pubDate>
+      
+      <guid>https://fajarslvn.github.io/about/</guid>
+      <description>Hi there!
+My Name is Fajar S, I am a white hat hacker &amp;amp; bug bounty hunter. I has spent more than 10 years in information technology field and 4 years in information security field, focused in risk from security testing point of view as pentester and bug hunter. I has served in Broadcast industries, ecommerce, finance, travel, social media app, pro bono, politics, government, etc.
+On those years of experiences I&amp;rsquo;m mastering of common web based vulnerabilities and appropriate methods of exploitation on OWASP Top 10 Web &amp;amp; API.</description>
+    </item>
+    
+    <item>
+      <title>My Way to Finding XSS (1)</title>
+      <link>https://fajarslvn.github.io/posts/finding-xss-1/</link>
+      <pubDate>Wed, 18 May 2022 14:49:48 +0700</pubDate>
+      
+      <guid>https://fajarslvn.github.io/posts/finding-xss-1/</guid>
+      <description>This is some content func main(myName str) {  Println(myName) } </description>
+    </item>
+    
+    <item>
+      <title>My Way to Finding XSS (2)</title>
+      <link>https://fajarslvn.github.io/posts/finding-xss-2/</link>
+      <pubDate>Wed, 18 May 2022 14:49:48 +0700</pubDate>
+      
+      <guid>https://fajarslvn.github.io/posts/finding-xss-2/</guid>
+      <description>This is some content func main(myName str) {  Println(myName) } </description>
+    </item>
+    
+  </channel>
+</rss>
