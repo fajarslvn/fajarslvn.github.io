@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Fajar Sylvana</title>
-    <link>https://fajarslvn.github.io/</link>
-    <description>Recent content on Fajar Sylvana</description>
+    <title>codeanalysis on Fajar Sylvana</title>
+    <link>https://fajarslvn.github.io/tags/codeanalysis/</link>
+    <description>Recent content in codeanalysis on Fajar Sylvana</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© fajarslvn.</copyright>
-    <lastBuildDate>Thu, 02 Jun 2022 19:00:48 +0700</lastBuildDate><atom:link href="https://fajarslvn.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 02 Jun 2022 19:00:48 +0700</lastBuildDate><atom:link href="https://fajarslvn.github.io/tags/codeanalysis/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Finding XSS with source code analysis I</title>
       <link>https://fajarslvn.github.io/posts/finding-xss-with-source-code-analysis-1/</link>
@@ -17,17 +17,6 @@
       <description>My way on finding vulnerabilities in new target website, first thing to do are fire up the burp suite (collecting all requests and responses from target), and click all the functions and buttons on target website. After that I usually analyze the HTML &amp;amp; javascript from the response.
 While reviewing the code.. I found a comment like this.. Well that&amp;rsquo;s interesting&amp;hellip;
 $(window).on(&amp;#39;load&amp;#39;, function() {  // old code for handling errors, due to be deprecated I was so curious&amp;hellip; So I start analyzing the code.</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>https://fajarslvn.github.io/about/</link>
-      <pubDate>Wed, 18 May 2022 15:13:52 +0700</pubDate>
-      
-      <guid>https://fajarslvn.github.io/about/</guid>
-      <description>Hi there!
-My Name is Fajar S, I am a white hat hacker &amp;amp; bug bounty hunter. I has spent more than 10 years in information technology field and 4 years in information security field, focused in risk from security testing point of view as pentester and bug hunter. I has served in Broadcast industries, ecommerce, finance, travel, social media app, pro bono, politics, government, etc.
-On those years of experiences I&amp;rsquo;m mastering of common web based vulnerabilities and appropriate methods of exploitation on OWASP Top 10 Web &amp;amp; API.</description>
     </item>
     
   </channel>

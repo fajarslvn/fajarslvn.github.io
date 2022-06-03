@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Finding XSS with source code analysis I - Fajar Sylvana</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="My way on finding vulnerabilities in new target website, first thing to do are fire up the burp suite (collecting all requests and responses from target)." />
+	<meta property="og:image" content=""/>
+	<meta property="og:title" content="Finding XSS with source code analysis I" />
+<meta property="og:description" content="My way on finding vulnerabilities in new target website, first thing to do are fire up the burp suite (collecting all requests and responses from target)." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://fajarslvn.github.io/posts/finding-xss-with-source-code-analysis-1/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-06-02T19:00:48+07:00" />
+<meta property="article:modified_time" content="2022-06-02T19:00:48+07:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Finding XSS with source code analysis I"/>
+<meta name="twitter:description" content="My way on finding vulnerabilities in new target website, first thing to do are fire up the burp suite (collecting all requests and responses from target)."/>
+<script src="https://fajarslvn.github.io/js/feather.min.js"></script>
+	
+	
+        <link href="https://fajarslvn.github.io/css/fonts.b685ac6f654695232de7b82a9143a46f9e049c8e3af3a21d9737b01f4be211d1.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="https://fajarslvn.github.io/css/main.8f5da775e810fb654876b6a2b09b0c98d6e05b87c4a747382b1b4a2c91e7acf2.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://fajarslvn.github.io/css/dark.726cd11ca6eb7c4f7d48eb420354f814e5c1b94281aaf8fd0511c1319f7f78a4.css"   />
+	
+	
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://fajarslvn.github.io/">Fajar Sylvana</a>
+	</div>
+	<nav>
+		
+		<a href="/">Home</a>
+		
+		<a href="/posts">All posts</a>
+		
+		<a href="/about">About</a>
+		
+		<a href="/tags">Tags</a>
+		
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">Finding XSS with source code analysis I</h1>
+			<div class="meta">Posted on Jun 2, 2022</div>
+		</div>
+		
+
+		<section class="body">
+			<p>My way on finding vulnerabilities in new target website, first thing to do are fire up the burp suite (collecting all requests and responses from target), and click all the functions and buttons on target website. After that I usually analyze the HTML &amp; javascript from the response.</p>
+<p>While reviewing the code.. I found a comment like this.. Well that&rsquo;s interesting&hellip;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">$</span>(window).<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#39;load&#39;</span>, <span style="color:#66d9ef">function</span>() {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// old code for handling errors, due to be deprecated
+</span></span></span></code></pre></div><p>I was so curious&hellip; So I start analyzing the code.<br>
+It was noted that an event listener is waiting for the page to load via <code>$(window).on('load'</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">$</span>(window).<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#39;load&#39;</span>, <span style="color:#66d9ef">function</span>() {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// old code for handling errors, due to be deprecated
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">errorCode</span> <span style="color:#f92672">=</span> decodeURIComponent(<span style="color:#a6e22e">getHashValue</span>(<span style="color:#e6db74">&#34;error&#34;</span>));  
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">*</span><span style="color:#a6e22e">snipped</span><span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">errorCode</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;null&#34;</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">errorCode</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;2&#39;</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// invalid password!
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;errorMsg&#34;</span>).<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">=</span>  <span style="color:#e6db74">&#34;&lt;div class=&#39;alert alert-danger mt-3 d-inline-block&#39; role=&#39;alert&#39;&gt; &lt;span class=&#39;badge badge-secondary&#39;&gt;Error &#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">errorCode</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;&lt;/span&gt; - No match with our records.&lt;/div&gt;&#34;</span>;
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">errorCode</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;1&#39;</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// invalid email ?
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;errorMsg&#34;</span>).<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&lt;div class=&#39;alert alert-danger mt-3 d-inline-block&#39; role=&#39;alert&#39;&gt; &lt;span class=&#39;badge badge-secondary&#39;&gt;Error &#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">errorCode</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;&lt;/span&gt; - Not valid. &lt;/div&gt;&#34;</span>;
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>            document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;errorMsg&#34;</span>).<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">=</span>  <span style="color:#e6db74">&#34;&lt;div class=&#39;alert alert-danger mt-3 d-inline-block&#39; role=&#39;alert&#39;&gt; Error &#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">errorCode</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34; - An unexpected error occured. &lt;/div&gt;&#34;</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p>As evident above, when the page is loaded the <code>getHashValue</code> function is called with an argument <code>(key)</code> consisting of a string <code>(&quot;error&quot;)</code> representing the parameter within the URL fragment who&rsquo;s value will be returned and assigned to the <code>errorCode</code> variable. The <code>getHashValue</code> function can be seen below:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getHashValue</span>(<span style="color:#a6e22e">key</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">matches</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">location</span>.<span style="color:#a6e22e">hash</span>.<span style="color:#a6e22e">match</span>(<span style="color:#66d9ef">new</span> RegExp(<span style="color:#a6e22e">key</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#39;=([^&amp;]*)&#39;</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">matches</span> <span style="color:#f92672">?</span> <span style="color:#a6e22e">matches</span>[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Because the <code>errorCode</code> variable can be injected and controlled via user input in the URL and the fact that the following JavaScript will take the <code>errorCode</code> value and inject it into the DOM as HTML:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;errorMsg&#34;</span>).<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">=</span>  <span style="color:#e6db74">&#34;&lt;div class=&#39;alert alert-danger mt-3 d-inline-block&#39; role=&#39;alert&#39;&gt; Error &#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">errorCode</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34; - An unexpected error occured. &lt;/div&gt;&#34;</span>;
+</span></span></code></pre></div><p>Can result in XSS as evident by clicking the link below which when when visited by a victim will execute attacker controlled JavaScript in the context of the victim user&rsquo;s browser:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>https://redacted.com/#error=&lt;/<span style="color:#f92672">div</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;&lt;<span style="color:#f92672">img</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">x</span> <span style="color:#a6e22e">onerror</span><span style="color:#f92672">=</span><span style="color:#e6db74">alert(0)</span>&gt;
+</span></span></code></pre></div><p>Successful execution of malicious JavaScript in the browser can be seen below:</p>
+<p><img src="/images/001.png" alt="xss"></p>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/xss">xss</a></li>
+					
+					<li><a href="/tags/codeanalysis">codeanalysis</a></li>
+					
+					<li><a href="/tags/owasp10">owasp10</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+  <div style="display:flex"><a class="soc" href="https://github.com/fajarslvn" title="GitHub"><i data-feather="github"></i></a><a class="soc" href="https://twitter.com/fajarslvn/" title="Twitter"><i data-feather="twitter"></i></a></div>
+  <div class="footer-info">
+    2022  © fajarslvn. |  <a
+      href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+  </div>
+</footer>
+
+
+<script>
+  feather.replace()
+</script></div>
+    </body>
+</html>
