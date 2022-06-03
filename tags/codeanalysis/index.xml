@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© fajarslvn.</copyright>
-    <lastBuildDate>Thu, 02 Jun 2022 19:00:48 +0700</lastBuildDate><atom:link href="https://fajarslvn.github.io/tags/codeanalysis/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 03 Jun 2022 19:00:00 +0700</lastBuildDate><atom:link href="https://fajarslvn.github.io/tags/codeanalysis/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Finding XSS with source code analysis I</title>
       <link>https://fajarslvn.github.io/posts/finding-xss-with-source-code-analysis-1/</link>
-      <pubDate>Thu, 02 Jun 2022 19:00:48 +0700</pubDate>
+      <pubDate>Fri, 03 Jun 2022 19:00:00 +0700</pubDate>
       
       <guid>https://fajarslvn.github.io/posts/finding-xss-with-source-code-analysis-1/</guid>
       <description>My way on finding vulnerabilities in new target website, first thing to do are fire up the burp suite (collecting all requests and responses from target), and click all the functions and buttons on target website. After that I usually analyze the HTML &amp;amp; javascript from the response.
